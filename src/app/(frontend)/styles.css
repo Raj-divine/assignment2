@@ -162,3 +162,7 @@ svg {
     }
   }
 }
+
+mark {
+  background-color: yellow;
+}

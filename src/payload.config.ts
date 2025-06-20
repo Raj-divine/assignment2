@@ -10,6 +10,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
+import { MarkFeature } from './lexical/features/mark.server'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,7 +23,11 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features({ defaultFeatures, rootFeatures }) {
+      return [...defaultFeatures, MarkFeature(), ...rootFeatures]
+    },
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
